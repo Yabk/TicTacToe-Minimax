@@ -21,9 +21,11 @@ class Minimax:
         if self.pruning:
             best = -2
             for move in moves:
-                score = Minimax.minimax_with_abpruning(move, False, self.first, best)
+                score = Minimax.minimax_with_abpruning(move, False, self.first, best-1)
                 best = max(best, score)
                 scores.append(score)
+                if best == 1:
+                    return self.extract_move(move)
 
             best_moves = [x for x in moves if scores[moves.index(x)] == best]
 
@@ -125,7 +127,7 @@ class Minimax:
                 node_score = Minimax.minimax_with_abpruning(node, False, player, best)
                 best = max(node_score, best)
                 if best >= ab:
-                    break
+                    return best
             return best
         else:
             best = 2
@@ -133,7 +135,7 @@ class Minimax:
                 node_score = Minimax.minimax_with_abpruning(node, True, player, best)
                 best = min(node_score, best)
                 if best <= ab:
-                    break
+                    return best
             return best
 
 
