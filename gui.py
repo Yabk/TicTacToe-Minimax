@@ -45,6 +45,7 @@ def new_game(bot_first):
         bot_play_button.config(state='active')
 
     else:
+        bot_play_button.config(state='disabled')
         unlock()
 
 
@@ -85,6 +86,7 @@ def toggle_pruning():
 
 
 root = tk.Tk()
+root.geometry('500x500')
 root.title('TicTacToe')
 menu_window = tk.Tk()
 menu_window.title('Menu')
