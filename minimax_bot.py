@@ -23,8 +23,9 @@ class Minimax:
             b = 2
             best = -2
             for move in moves:
-                score = Minimax.minimax_with_abpruning(move, False, self.first, a, b)
+                score = Minimax.minimax_with_abpruning(move, False, self.first, a-1, b)
                 best = max(best, score)
+                a = max(a, best)
                 scores.append(score)
                 if best == 1:
                     return self.extract_move(move)
