@@ -19,9 +19,11 @@ class Minimax:
         nodes_visited = 0
 
         if self.pruning:
+            a = -2
+            b = 2
             best = -2
             for move in moves:
-                score = Minimax.minimax_with_abpruning(move, False, self.first, best-1)
+                score = Minimax.minimax_with_abpruning(move, False, self.first, a, b)
                 best = max(best, score)
                 scores.append(score)
                 if best == 1:
@@ -108,7 +110,7 @@ class Minimax:
             return best, wins
 
 
-    def minimax_with_abpruning(board, maximizing, player, ab):
+    def minimax_with_abpruning(board, maximizing, player, a, b):
         global nodes_visited
         state = Game.check_game_state(board)
         if state != GameState.NOT_DONE:
@@ -124,17 +126,19 @@ class Minimax:
         if maximizing:
             best = -2
             for node in Minimax.next_level(board, player):
-                node_score = Minimax.minimax_with_abpruning(node, False, player, best)
+                node_score = Minimax.minimax_with_abpruning(node, False, player, a, b)
                 best = max(node_score, best)
-                if best >= ab:
+                a = max(a, best)
+                if a >= b:
                     return best
             return best
         else:
             best = 2
             for node in Minimax.next_level(board, not player):
-                node_score = Minimax.minimax_with_abpruning(node, True, player, best)
+                node_score = Minimax.minimax_with_abpruning(node, True, player, a, b)
                 best = min(node_score, best)
-                if best <= ab:
+                b = min(b, best)
+                if b <= a:
                     return best
             return best
 
